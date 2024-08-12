@@ -2,7 +2,7 @@ import { Play } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
-import { differenceInSeconds } from 'date-fns'
+import { differenceInSeconds, interval } from 'date-fns'
 
 import {
   CountdownButton,
@@ -48,12 +48,17 @@ export function Home() {
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
 
   useEffect(() => {
+    let interval: number
     if (activeCycle) {
-      setInterval(() => {
+      interval = setInterval(() => {
         setSecondsAmountPassed(
           differenceInSeconds(new Date(), activeCycle.startDate),
         )
       }, 1000)
+    }
+
+    return () => {
+      clearInterval(interval)
     }
   }, [activeCycle])
 
@@ -67,6 +72,7 @@ export function Home() {
 
     setCycles((state) => [...state, newCycle])
     setActiveCycleId(newCycle.id)
+    setSecondsAmountPassed(0)
 
     reset()
   }
