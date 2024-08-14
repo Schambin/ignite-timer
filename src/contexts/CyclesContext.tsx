@@ -15,6 +15,7 @@ interface CycleFormData {
 }
 
 interface CyclesContextType {
+  cycles: Cycle[]
   activeCycle: CycleFormData | undefined
   activeCycleId: string | null
   amountSecondsPassed: number
@@ -30,7 +31,9 @@ interface CyclesContextProvidorProps {
   children: ReactNode
 }
 
-export function CyclesContextProvider({ children }) {
+export function CyclesContextProvider({
+  children,
+}: CyclesContextProvidorProps) {
   const [cycles, setCycles] = useState<CycleFormData[]>([])
   const [activeCycleId, setActiveCycleId] = useState<string | null>(null)
   const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
@@ -89,6 +92,7 @@ export function CyclesContextProvider({ children }) {
   return (
     <CycleContext.Provider
       value={{
+        cycles,
         activeCycle,
         activeCycleId,
         markCurrentCycleAsFinished,
