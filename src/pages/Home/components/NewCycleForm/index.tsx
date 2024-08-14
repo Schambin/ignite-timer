@@ -27,8 +27,8 @@ export function NewCycleForm() {
       <label htmlFor="minutesAmount">Durante</label>
       <MinutesAmountInput
         type="number"
-        // step={5}
-        min={1}
+        step={5}
+        min={5}
         max={60}
         id="minutesAmount"
         disabled={!!activeCycle}
